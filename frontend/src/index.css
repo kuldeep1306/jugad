@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #FBFAF7;
+  color: #22242F;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dark body {
+  background-color: #14162B;
+  color: #FBFAF7;
+}
+
+.chip {
+  font-family: "IBM Plex Mono", monospace;
+}
+
+/* thin, theme-aware scrollbar for a more polished feel */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #E4E0D6;
+  border-radius: 999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #31324F;
+}
+
+/* keep focus rings visible for keyboard users, on both themes */
+:focus-visible {
+  outline: 2px solid #F5A623;
+  outline-offset: 2px;
+}
+
+
+
+
