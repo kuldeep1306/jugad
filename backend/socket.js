@@ -18,10 +18,18 @@ const removeUserSocket = (userId, socketId) => {
   if (set.size === 0) userSockets.delete(userId);
 };
 
-const initSocket = (server, corsOrigins) => {
+const initSocket = (server, corsOriginCheck) => {
   io = new Server(server, {
     cors: {
-      origin: corsOrigins,
+      origin: (origin, callback) => {
+        // corsOriginCheck ek function ho sakta hai (dynamic check) ya static array/string
+        if (typeof corsOriginCheck === "function") {
+          return corsOriginCheck(origin)
+            ? callback(null, true)
+            : callback(new Error(`Socket.IO CORS blocked for origin: ${origin}`));
+        }
+        callback(null, corsOriginCheck);
+      },
       credentials: true,
     },
   });
