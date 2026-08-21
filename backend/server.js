@@ -21,7 +21,7 @@ connectDB();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://jugad-ochre.vercel.app",
+  "https://jugaduu.vercel.app",
 ];
 
 app.use(
