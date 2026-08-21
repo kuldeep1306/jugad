@@ -93,6 +93,10 @@ export default function Navbar() {
               </NavLink>
             )}
 
+            <NavLink to="/feedback">
+              Feedback
+            </NavLink>
+
           </div>
 
           {/* ================= DESKTOP ACTIONS ================= */}
@@ -282,6 +286,10 @@ export default function Navbar() {
                   My Connections
                 </NavLink>
               )}
+
+              <NavLink to="/feedback" onClick={closeMobile}>
+                Feedback
+              </NavLink>
 
             </div>
 

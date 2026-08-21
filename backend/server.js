@@ -12,47 +12,28 @@ const connectionsRoutes = require("./routes/connections");
 const messagesRoutes = require("./routes/messages");
 const reviewsRoutes = require("./routes/reviews");
 const notificationsRoutes = require("./routes/notifications");
+const feedbackRoutes = require("./routes/feedback");
 
 const app = express();
 const server = http.createServer(app);
 
 connectDB();
 
-// hardcoded origins + env se extra origins (comma-separated FRONTEND_URLS) + koi bhi *.vercel.app
-// preview/production URL — Vercel har deploy pe alag domain de sakta hai, isliye regex fallback bhi rakha hai
-const staticOrigins = [
+const allowedOrigins = [
   "http://localhost:5173",
   "https://jugad-ochre.vercel.app",
-  "https://jugaduu.vercel.app",
-  ...((process.env.FRONTEND_URLS || "")
-    .split(",")
-    .map((u) => u.trim())
-    .filter(Boolean)),
 ];
 
-const vercelPreviewRegex = /^https:\/\/[a-z0-9-]+\.vercel\.app$/;
-
-const isAllowedOrigin = (origin) => {
-  if (!origin) return true; // server-to-server / curl / same-origin requests mein origin header nahi hota
-  return staticOrigins.includes(origin) || vercelPreviewRegex.test(origin);
-};
-
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (isAllowedOrigin(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error(`CORS blocked for origin: ${origin}`));
-    }
-  },
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // real-time notifications ke liye socket.io ussi server pe attach karo
-initSocket(server, isAllowedOrigin);
+initSocket(server, allowedOrigins);
 
 app.get("/", (req, res) => {
   res.json({ message: "JugaadU API is running" });
@@ -65,6 +46,7 @@ app.use("/api/connections", connectionsRoutes);
 app.use("/api/messages", messagesRoutes);
 app.use("/api/reviews", reviewsRoutes);
 app.use("/api/notifications", notificationsRoutes);
+app.use("/api/feedback", feedbackRoutes);
 
 // 404 handler
 app.use((req, res) => {

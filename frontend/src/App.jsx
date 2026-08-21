@@ -11,6 +11,7 @@ import PostNeed from "./pages/PostNeed.jsx";
 import NeedDetail from "./pages/NeedDetail.jsx";
 import Connections from "./pages/Connections.jsx";
 import Chat from "./pages/Chat.jsx";
+import Feedback from "./pages/Feedback.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/browse" element={<Browse />} />
           <Route path="/needs/:id" element={<NeedDetail />} />
+          <Route path="/feedback" element={<Feedback />} />
           <Route
             path="/post-need"
             element={
